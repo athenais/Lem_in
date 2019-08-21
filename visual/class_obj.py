@@ -15,6 +15,20 @@ import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 from draw import graph_list
 
+class Button(ToolToggleBase):
+   def __init__(self, *args, **kwargs):
+      super().__init__(*args, **kwargs)
+      print("Init Button Class")
+
+   def enable(self, *args):
+      self.action(True)
+
+   def disable(self, *args):
+      self.action(False)
+
+   def action():
+      pass
+    
 def get_ants_per_path():
     dic = {}
     i = 1
@@ -25,27 +39,23 @@ def get_ants_per_path():
             i += 1
     return (dic)
 
-class Ants(ToolToggleBase):
+class Ants(Button):
     description = "Ants"
     default_toggled = False
     image = r"fire-ant-png-4.png"
 
     def __init__(self, *args, fig, interval, graph, options, **kwargs):
+        super().__init__(*args, **kwargs)
         self.graph = graph
         self.options = options
         self.ants = get_ants_per_path()
-        self.length = self.ants[1] + len(self.graph['p'][1]) + 10
+        self.length = self.ants[1] + len(self.graph['p'][1]) + 1 + 2
         self.fig = fig
         self.interval = interval
-        super().__init__(*args, **kwargs)
-    
-    def enable(self, *args):
-        self.ants_path(True)
 
-    def disable(self, *args):
-        self.ants_path(False)
 
-    def ants_path(self, state):
+    # ants_path
+    def action(self, state):
         for ax in self.figure.get_axes():
             ax.clear()
         graph_list(0, self.options, self.graph, 0, 0, None)
@@ -62,23 +72,19 @@ class Ants(ToolToggleBase):
         plt.gca().invert_yaxis()
         self.figure.canvas.draw()
 
-class Optimum(ToolToggleBase):
+class Optimum(Button):
     description = "optimum paths"
     default_toggled = False
 
     def __init__(self, *args, graph, options, **kwargs):
+        super().__init__(*args, **kwargs)
         self.options = options
         self.graph = graph
         self.length = len(self.graph['p'][len(self.graph['p']) - 1])
-        super().__init__(*args, **kwargs)
+
     
-    def enable(self, *args):
-        self.optimum_path(True)
-
-    def disable(self, *args):
-        self.optimum_path(False)
-
-    def optimum_path(self, state):
+    # optimum_path
+    def action(self, state):
         for ax in self.figure.get_axes():
             ax.clear()
         graph_list(0, self.options, self.graph, 0, 0, None)
@@ -88,23 +94,17 @@ class Optimum(ToolToggleBase):
         plt.gca().invert_yaxis()
         self.figure.canvas.draw()
 
-class Shortest(ToolToggleBase):
+class Shortest(Button):
     description = "shortest path"
     default_toggled = False
 
     def __init__(self, *args, graph, options, **kwargs):
+        super().__init__(*args, **kwargs)
         self.options = options
         self.graph = graph
         self.length = len(self.graph['p'][0])
-        super().__init__(*args, **kwargs)
 
-    def enable(self, *args):
-        self.shortest_path(True)
-
-    def disable(self, *args):
-        self.shortest_path(False)
-
-    def shortest_path(self, state):
+    def action(self, state):
         for ax in self.figure.get_axes():
             ax.clear()
         graph_list(0, self.options, self.graph, 0, 0, None)
