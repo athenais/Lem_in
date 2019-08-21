@@ -6,4 +6,4 @@ We are given a virtual ant farm through the standard input as well as a starting
 
 Two ants are not allowed to occupy a room/node at the same time.
 
-![lem_in](athenais/pics/lem.png)
+![lem_in](lem.png)
